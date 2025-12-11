@@ -34,3 +34,6 @@ def retrain_model(request):
 def predict_risk(request):
     # TODO: usar modelo entrenado para predecir riesgo
     return JsonResponse({"message": "predict_risk endpoint"}, status=200)
+
+def test_api(request):
+    return JsonResponse({"message": "Hola desde Django API!"})
