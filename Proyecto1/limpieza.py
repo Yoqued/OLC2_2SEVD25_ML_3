@@ -112,3 +112,13 @@ df = df[df['riesgo'].isin(['riesgo', 'no riesgo'])].copy()
 
 # Reemplazar directamente riesgo por 0/1
 df['riesgo'] = df['riesgo'].map({'no riesgo': 0, 'riesgo': 1})
+
+
+
+# Eliminar duplicados
+
+df['actividades_extracurriculares'] = df['actividades_extracurriculares'].apply(tuple)
+
+df = df.drop_duplicates().reset_index(drop=True)
+
+df['actividades_extracurriculares'] = df['actividades_extracurriculares'].apply(list)
