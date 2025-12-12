@@ -9,6 +9,5 @@ urlpatterns = [
     path('tune-hyperparams/', views.tune_hyperparams, name='tune_hyperparams'),
     path('retrain/', views.retrain_model, name='retrain_model'),
     path('predict/', views.predict_risk, name='predict_risk'),
-    path('test/', views.test_api, name='test_api'),
 ]
 

@@ -1,39 +1,38 @@
-from django.shortcuts import render
-
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
-# CARGA MASIVA
+@csrf_exempt
 def upload_csv(request):
-    # TODO: implementar carga de archivo CSV
-    return JsonResponse({"message": "upload_csv endpoint"}, status=200)
+    # TODO: lógica real
+    if request.method == "POST":
+        return JsonResponse({"message": "CSV recibido (fake)"})
+    return JsonResponse({"error": "Método no permitido"}, status=405)
 
+@csrf_exempt
 def clean_data(request):
-    # TODO: implementar limpieza de datos
-    return JsonResponse({"message": "clean_data endpoint"}, status=200)
+    return JsonResponse({"message": "Limpieza (fake)"})
 
-# ENTRENAMIENTO
+@csrf_exempt
 def train_model(request):
-    # TODO: implementar entrenamiento del modelo
-    return JsonResponse({"message": "train_model endpoint"}, status=200)
+    return JsonResponse({"message": "Entrenamiento (fake)"})
 
-# EVALUACIÓN
+@csrf_exempt
 def get_metrics(request):
-    # TODO: retornar métricas del modelo
-    return JsonResponse({"message": "get_metrics endpoint"}, status=200)
+    return JsonResponse({
+        "accuracy": 0.95,
+        "precision": 0.9,
+        "recall": 0.92,
+        "f1": 0.91,
+    })
 
-# AJUSTE DE HIPERPARÁMETROS
+@csrf_exempt
 def tune_hyperparams(request):
-    # TODO: recibir hiperparámetros y guardarlos
-    return JsonResponse({"message": "tune_hyperparams endpoint"}, status=200)
+    return JsonResponse({"message": "Hiperparámetros actualizados (fake)"})
 
+@csrf_exempt
 def retrain_model(request):
-    # TODO: reentrenar modelo con nuevos hiperparámetros
-    return JsonResponse({"message": "retrain_model endpoint"}, status=200)
+    return JsonResponse({"message": "Modelo reentrenado (fake)"})
 
-# PREDICCIÓN
+@csrf_exempt
 def predict_risk(request):
-    # TODO: usar modelo entrenado para predecir riesgo
-    return JsonResponse({"message": "predict_risk endpoint"}, status=200)
-
-def test_api(request):
-    return JsonResponse({"message": "Hola desde Django API!"})
+    return JsonResponse({"riesgo": "alto", "probabilidad": 0.82})
