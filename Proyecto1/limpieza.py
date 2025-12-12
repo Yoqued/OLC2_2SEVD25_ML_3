@@ -28,3 +28,19 @@ cols_enteras = [
 
 for col in cols_porcentajes + cols_enteras:
     df[col] = pd.to_numeric(df[col], errors='coerce')
+
+
+# Columnas que representan porcentajes
+for col in cols_porcentajes:
+
+    # Marcaremons como NaN los valores fuera de rango [0, 100]
+    fuera_rango = ~df[col].between(0, 100)
+    df.loc[fuera_rango, col] = np.nan
+
+    # Calcular mediana solo con los valores válidos
+    mediana_valida = df[col].median()
+
+    # Rellenar faltantes
+    df[col] = df[col].fillna(mediana_valida)
+
+df.head(15)
