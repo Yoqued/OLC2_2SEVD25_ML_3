@@ -9,26 +9,24 @@ export async function uploadCsv(file) {
   const res = await fetch(`${API_URL}/upload-csv/`, {
     method: "POST",
     body: formData,
+    credentials: "include", 
   });
 
-  if (!res.ok) {
-    throw new Error("Error al subir el CSV");
-  }
-
+  if (!res.ok) throw new Error("Error al subir el CSV");
   return res.json();
 }
+
 
 export async function cleanData() {
   const res = await fetch(`${API_URL}/clean-data/`, {
     method: "POST",
+    credentials: "include",
   });
 
-  if (!res.ok) {
-    throw new Error("Error al limpiar datos");
-  }
-
+  if (!res.ok) throw new Error("Error al limpiar datos");
   return res.json();
 }
+
 
 // ---------- ENTRENAMIENTO ----------
 
