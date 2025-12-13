@@ -114,7 +114,6 @@ df = df[df['riesgo'].isin(['riesgo', 'no riesgo'])].copy()
 df['riesgo'] = df['riesgo'].map({'no riesgo': 0, 'riesgo': 1})
 
 
-
 # Eliminar duplicados
 
 df['actividades_extracurriculares'] = df['actividades_extracurriculares'].apply(tuple)
@@ -122,3 +121,10 @@ df['actividades_extracurriculares'] = df['actividades_extracurriculares'].apply(
 df = df.drop_duplicates().reset_index(drop=True)
 
 df['actividades_extracurriculares'] = df['actividades_extracurriculares'].apply(list)
+
+
+# Columna extra para representar número de actividades
+df['num_actividades'] = df['actividades_extracurriculares'].apply(
+    lambda x: len(x) if isinstance(x, list) else 0
+)
+
