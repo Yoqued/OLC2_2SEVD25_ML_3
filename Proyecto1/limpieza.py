@@ -6,7 +6,6 @@ from google.colab import files
 uploaded = files.upload()
 
 df = pd.read_csv('studentguard_data_prueba.csv')
-df.head(15)
 
 # Verificar tipo de datos
 
@@ -42,9 +41,6 @@ for col in cols_porcentajes:
 
     # Rellenar faltantes
     df[col] = df[col].fillna(mediana_valida)
-
-df.head(15)
-
 
 # Columnas que representan números enteros
 
@@ -127,4 +123,66 @@ df['actividades_extracurriculares'] = df['actividades_extracurriculares'].apply(
 df['num_actividades'] = df['actividades_extracurriculares'].apply(
     lambda x: len(x) if isinstance(x, list) else 0
 )
+
+
+
+'''
+AQUÍ COMIENZA EL ENTRENAMIENTO DEL MODELO
+'''
+
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+
+X = df[[
+    'promedio_actual',
+    'asistencia_clases',
+    'tareas_entregadas',
+    'participacion_clase',
+    'horas_estudio',
+    'promedio_evaluaciones',
+    'cursos_reprobados',
+    'num_actividades',
+    'reportes_disciplinarios'
+]].copy()
+
+y = df['riesgo'].copy()
+
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.25,
+    random_state=42,
+    stratify=y
+)
+
+print("Train:", X_train.shape, " Test:", X_test.shape)
+
+modelo = RandomForestClassifier(
+    n_estimators=300,
+    max_depth=5,
+    min_samples_leaf=2,
+    random_state=42,
+    class_weight='balanced'
+)
+
+modelo.fit(X_train, y_train)
+
+
+
+'''
+AQUÍ COMIENZA LA PREDICCIÓN
+'''
+y_pred = modelo.predict(X_test)
+
+
+
+'''
+AQUÍ COMIENZA LA VISUALIZACIÓN DE MÉTRICAS
+'''
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("\nMatriz de confusión:\n", confusion_matrix(y_test, y_pred))
+print("\nReporte:\n", classification_report(y_test, y_pred, digits=3))
+
 
